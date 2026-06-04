@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rambla Cafe - Club</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Tipografía de gran peso como requiere la identidad visual -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="app-container">
+        <div class="loyalty-card">
+            <header class="card-header">
+                <!-- Vector unificado: rambla cafe. con punto negro -->
+                <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="100%">
+                  <style>
+                    .logo-text {
+                      font-family: 'Montserrat', sans-serif;
+                      font-weight: 900;
+                      font-size: 78px;
+                      fill: #000000;
+                      letter-spacing: -3px;
+                    }
+                  </style>
+                  <text x="5" y="90" class="logo-text">rambla cafe.</text>
+                </svg>
+            </header>
+            
+            <section class="user-info">
+                <h2>¡Hola, <span id="userName">Cliente</span>!</h2>
+                <p>Te faltan <strong class="accent-text" id="remainingStamps">4</strong> cafés para tu premio.</p>
+            </section>
+
+            <div class="stamps-grid" id="stampsGrid">
+                <!-- La grilla se renderiza dinámicamente desde el JS -->
+            </div>
+
+            <button class="btn-primary" id="btnAction">Escanear QR</button>
+        </div>
+    </main>
+    <script src="js/app.js"></script>
+</body>
+</html>

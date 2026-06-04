@@ -1,44 +1,51 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rambla Cafe - Club</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Tipografía de gran peso como requiere la identidad visual -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <main class="app-container">
-        <div class="loyalty-card">
-            <header class="card-header">
-                <!-- Vector unificado: rambla cafe. con punto negro -->
-                <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="100%">
-                  <style>
-                    .logo-text {
-                      font-family: 'Montserrat', sans-serif;
-                      font-weight: 900;
-                      font-size: 78px;
-                      fill: #000000;
-                      letter-spacing: -3px;
-                    }
-                  </style>
-                  <text x="5" y="90" class="logo-text">rambla cafe.</text>
-                </svg>
-            </header>
-            
-            <section class="user-info">
-                <h2>¡Hola, <span id="userName">Cliente</span>!</h2>
-                <p>Te faltan <strong class="accent-text" id="remainingStamps">4</strong> cafés para tu premio.</p>
-            </section>
+<!-- Reemplazar dentro de <div id="pantallaRegistro"> -->
+<div class="logo-container">
+    <div class="logo-animado">
+        <!-- Vector unificado -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="220" style="margin-bottom: 10px;">
+          <style>
+            .logo-text { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 78px; fill: var(--dark); letter-spacing: -3px; }
+            .logo-dot { fill: var(--dark); } /* Punto negro */
+          </style>
+          <text x="5" y="90" class="logo-text">rambla cafe<tspan class="logo-dot">.</tspan></text>
+        </svg>
+    </div>
+</div>
 
-            <div class="stamps-grid" id="stampsGrid">
-                <!-- La grilla se renderiza dinámicamente desde el JS -->
-            </div>
+<div class="input-group">
+    <label class="input-label">Tu nombre</label>
+    <input type="text" id="inputNombre" class="input-box" placeholder="Ej: Martín" required>
+</div>
 
-            <button class="btn-primary" id="btnAction">Escanear QR</button>
+<div class="input-group">
+    <label class="input-label">Email</label>
+    <input type="email" id="inputEmail" class="input-box" placeholder="Ej: hola@email.com" required>
+</div>
+
+<!-- Reemplazar en <div class="references-box"> -->
+<div class="references-box">
+    <div class="ref-item">
+        <div class="ref-icon-badge">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="38" fill="var(--accent)" stroke="var(--dark)" stroke-width="4" />
+                <text x="50" y="65" text-anchor="middle" fill="var(--dark)" font-family="'Montserrat', sans-serif" font-weight="900" font-size="42px">5%</text>
+            </svg>
         </div>
-    </main>
-    <script src="js/app.js"></script>
-</body>
-</html>
+        <span>Sello 3: 5% OFF en panificados</span>
+        <span id="refStatus3" class="ref-text-status"></span>
+    </div>
+    <div class="ref-item">
+        <div class="ref-icon-badge">
+            <!-- Icono de regalo referencial -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                 <rect x="30" y="40" width="40" height="40" fill="var(--accent)" stroke="var(--dark)" stroke-width="4"/>
+                 <rect x="25" y="30" width="50" height="10" fill="var(--accent)" stroke="var(--dark)" stroke-width="4"/>
+                 <line x1="50" y1="30" x2="50" y2="80" stroke="var(--dark)" stroke-width="4"/>
+                 <path d="M50,30 Q40,15 35,25 Q30,35 50,30" fill="none" stroke="var(--dark)" stroke-width="4"/>
+                 <path d="M50,30 Q60,15 65,25 Q70,35 50,30" fill="none" stroke="var(--dark)" stroke-width="4"/>
+            </svg>
+        </div>
+        <span>Sello 5: Barrita de regalo</span>
+        <span id="refStatus5" class="ref-text-status"></span>
+    </div>
+</div>

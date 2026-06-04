@@ -1,4 +1,4 @@
-import { db } from './firebase-config.js';
+import { db } from ' ../firebase-config.js';
 import { doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 class RamblaApp {

@@ -138,10 +138,8 @@ class RamblaApp {
         for (let i = 1; i <= totalTazas; i++) {
             const contenedorSvg = document.createElement('div');
             
-            // Verificamos si los premios fueron canjeados para agregarles el tic después en las referencias
             let yaFueUsado = false;
 
-            // Inserta la medialuna en el sello 3 y el rayo en el sello 5
             if (i === 3) {
                 contenedorSvg.innerHTML = this.obtenerSvgBakery();
                 yaFueUsado = desc3Usado;
@@ -164,16 +162,14 @@ class RamblaApp {
                 }, 50);
             }
             
-            // Ya NO se agrega la clase .used a nivel SVG para que no se ponga gris/oscuro.
-            
             this.ui.gridSellos.appendChild(svgElement);
         }
 
-        // Actualización de referencias con el texto "Canjeado ✓"
-        this.ui.status3.innerText = desc3Usado ? "Canjeado ✓" : (puntosActuales >= 3 ? "Disponible ✨" : "");
+        // Se quitó la estrellita de "Disponible"
+        this.ui.status3.innerText = desc3Usado ? "Canjeado ✓" : (puntosActuales >= 3 ? "Disponible" : "");
         this.ui.status3.style.color = desc3Usado ? "var(--dark)" : "var(--accent)";
         
-        this.ui.status5.innerText = desc5Usado ? "Canjeado ✓" : (puntosActuales >= 5 ? "Disponible ✨" : "");
+        this.ui.status5.innerText = desc5Usado ? "Canjeado ✓" : (puntosActuales >= 5 ? "Disponible" : "");
         this.ui.status5.style.color = desc5Usado ? "var(--dark)" : "var(--accent)";
 
         this.ui.puntos.innerText = puntosActuales;
@@ -227,7 +223,6 @@ class RamblaApp {
         const container = document.getElementById('confettiContainer');
         if(!container) return;
         
-        // Colores adaptados a la paleta de club rambla (Verde, Blanco, Gris)
         const colors = ['#72BF44', '#FFFFFF', '#161B22', '#10B981'];
         const shapes = ['circle', 'square', 'triangle'];
 

@@ -102,7 +102,8 @@ class RamblaApp {
     }
 
     abrirTarjeta(celular) {
-        this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=FFFFFF&color=000000`;
+        // SOLUCIÓN 1: Cambiamos FFFFFF por EFEFEF para que el fondo del QR coincida con la tarjeta
+        this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=EFEFEF&color=000000`;
         this.ui.telLabel.innerText = `******${celular.slice(-4)}`;
 
         this.unsubscribe = onSnapshot(doc(this.db, "clientes", celular), (docSnap) => {
@@ -111,10 +112,11 @@ class RamblaApp {
                 this.ui.nombre.innerText = datos.nombre;
                 
                 if(this.primeraCarga) {
+                    // SOLUCIÓN 3: Reducimos la demora artificial de 400ms a solo 50ms. Carga rapidísimo.
                     setTimeout(() => {
                         this.cambiarPantalla('tarjeta');
                         this.renderizarTazas(datos);
-                    }, 400);
+                    }, 50);
                 } else {
                     this.renderizarTazas(datos);
                 }
@@ -194,9 +196,11 @@ class RamblaApp {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        for (let i = 0; i < 12; i++) {
+        // SOLUCIÓN 2: Reducimos a 6 partículas para las tazas y le sumamos willChange para fluidez
+        for (let i = 0; i < 6; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
+            p.style.willChange = 'transform, opacity'; // Fuerza el uso de la GPU del celular
             document.body.appendChild(p);
 
             const angle = Math.random() * Math.PI * 2;
@@ -224,13 +228,14 @@ class RamblaApp {
         const container = document.getElementById('confettiContainer');
         if(!container) return;
         
-        // ¡Cambiado! Ahora los colores son en escala de grises y negro puro.
         const colors = ['#000000', '#333333', '#888888', '#CCCCCC'];
         const shapes = ['circle', 'square', 'triangle'];
 
-        for (let i = 0; i < 80; i++) {
+        // SOLUCIÓN 2: Bajamos a 40 confetis (la mitad) y le agregamos willChange
+        for (let i = 0; i < 40; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
+            confetti.style.willChange = 'transform, opacity'; // Fuerza el uso de la GPU del celular
             
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];

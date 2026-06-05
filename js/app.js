@@ -111,10 +111,11 @@ class RamblaApp {
                 this.ui.nombre.innerText = datos.nombre;
                 
                 if(this.primeraCarga) {
+                    // Carga ultra rápida a 50ms
                     setTimeout(() => {
                         this.cambiarPantalla('tarjeta');
                         this.renderizarTazas(datos);
-                    }, 400);
+                    }, 50);
                 } else {
                     this.renderizarTazas(datos);
                 }
@@ -194,9 +195,11 @@ class RamblaApp {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        for (let i = 0; i < 12; i++) {
+        // Optimizado a 6 partículas para no sobrecargar el celular
+        for (let i = 0; i < 6; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
+            p.style.willChange = 'transform, opacity'; // Aceleración por GPU
             document.body.appendChild(p);
 
             const angle = Math.random() * Math.PI * 2;
@@ -227,9 +230,11 @@ class RamblaApp {
         const colors = ['#72BF44', '#FFFFFF', '#161B22', '#10B981'];
         const shapes = ['circle', 'square', 'triangle'];
 
-        for (let i = 0; i < 80; i++) {
+        // Optimizado a 40 confetis con GPU acelerada
+        for (let i = 0; i < 40; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
+            confetti.style.willChange = 'transform, opacity'; 
             
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];

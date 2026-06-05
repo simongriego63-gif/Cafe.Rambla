@@ -7,7 +7,7 @@
     --white: #FFFFFF;
     
     --aurora-1: rgba(114, 191, 68, 0.15); 
-    --aurora-2: rgba(0, 0, 0, 0.5);     
+    --aurora-2: rgba(0, 0, 0, 0.3);     
     --aurora-3: rgba(255, 255, 255, 0.02);
 }
 
@@ -44,7 +44,9 @@ body {
 .main-container { position: relative; z-index: 1; width: 100%; max-width: 400px; }
 
 /* === TARJETA BASE ESTILOS === */
-.wallet-card { background: var(--bg-card); border-radius: 24px; padding: 32px; border: 3px solid var(--dark); box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.6); }
+/* SE ELIMINÓ LA SOMBRA DURA DE NEGRO SÓLIDO POR UNA DIFUMINADA Y ELEGANTE */
+/* SE REDUJO EL PADDING INTERNO PARA ACORTAR LA ALTURA DE LA TARJETA */
+.wallet-card { background: var(--bg-card); border-radius: 24px; padding: 24px 28px; border: 3px solid var(--dark); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
 
 /* === SKELETON LOADING === */
 #pantallaSkeleton { display: none; width: 100%; }
@@ -62,7 +64,7 @@ body {
 
 /* === PANTALLA REGISTRO === */
 #pantallaRegistro { display: none; text-align: center; }
-.registro-card { background: var(--bg-card); border-radius: 24px; padding: 48px 32px; border: 3px solid var(--dark); box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.6); }
+.registro-card { background: var(--bg-card); border-radius: 24px; padding: 48px 32px; border: 3px solid var(--dark); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
 .logo-container { margin-bottom: 30px; }
 .logo-animado { display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 auto 12px; animation: pulseGlow 4s ease-in-out infinite; }
 
@@ -98,14 +100,16 @@ body {
 .front { transform: rotateY(0deg); }
 .back { transform: rotateY(180deg); }
 
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+/* SE REDUJO EL MARGIN BOTTOM */
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 .user-info { text-align: right; }
 .user-nickname { font-size: 16px; font-weight: 800; color: var(--accent); }
 .user-tel-label { font-size: 12px; color: var(--dark); opacity: 0.6; font-weight: 600; display: block; margin-top: 4px; }
 
 /* === STAMPS/SELLOS === */
-.stamps-container { background: rgba(255, 255, 255, 0.02); border-radius: 20px; padding: 24px 20px; margin-bottom: 16px; border: 2px dashed var(--dark-soft); }
-.stamps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; justify-items: center; }
+/* SE REDUJO EL PADDING INTERNO Y MARGENES INFERIORES */
+.stamps-container { background: rgba(255, 255, 255, 0.02); border-radius: 20px; padding: 18px 16px; margin-bottom: 12px; border: 2px dashed var(--dark-soft); }
+.stamps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; justify-items: center; }
 
 /* === ÍCONOS DE SELLOS (TAZA, MEDIALUNA, RAYO) === */
 .stamp-cup, .stamp-bakery, .stamp-bolt { width: 44px; height: 44px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -131,19 +135,19 @@ body {
 
 @keyframes steam { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translateY(-15px); opacity: 0; } }
 
-/* (Se removió intencionalmente la regla .used con escala de grises y opacidad para que los sellos mantengan el color) */
-
 .stamps-text { text-align: center; font-size: 11px; color: var(--dark); opacity: 0.6; margin: 0; font-weight: 600; }
 
 /* === APARTADO DE REFERENCIAS === */
-.references-box { background: rgba(255, 255, 255, 0.02); border-radius: 16px; padding: 12px 14px; margin-bottom: 24px; border: 1px solid var(--dark-soft); display: flex; flex-direction: column; gap: 8px; }
+/* SE REDUJO EL PADDING INTERNO Y MARGENES INFERIORES */
+.references-box { background: rgba(255, 255, 255, 0.02); border-radius: 16px; padding: 10px 12px; margin-bottom: 18px; border: 1px solid var(--dark-soft); display: flex; flex-direction: column; gap: 8px; }
 .ref-item { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; color: var(--dark); }
 .ref-icon-badge { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ref-icon-badge svg { width: 100%; height: 100%; }
 .ref-text-status { margin-left: auto; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
 
 /* === INFO ROW === */
-.info-row { display: flex; justify-content: space-between; margin-bottom: 28px; padding: 0 4px; }
+/* SE REDUJO EL MARGEN INFERIOR */
+.info-row { display: flex; justify-content: space-between; margin-bottom: 18px; padding: 0 4px; }
 .info-label { font-size: 11px; color: var(--dark); opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: 700; }
 .info-value { font-weight: 800; font-size: 15px; color: var(--dark); }
 .info-value-points { font-size: 28px; font-weight: 900; color: var(--accent); font-family: 'Montserrat', sans-serif; }
@@ -156,13 +160,13 @@ body {
 .user-id { font-size: 11px; color: var(--dark); opacity: 0.5; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
 
 /* === DORSO TARJETA === */
-.back { background: var(--bg-card); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px; border: 3px solid var(--dark); box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.6); min-height: 500px; }
+.back { background: var(--bg-card); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; border: 3px solid var(--dark); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); min-height: 430px; }
 .back-logo-animado { display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
 /* === SISTEMA DE PARTÍCULAS === */
 .particle { position: fixed; width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
-/* === CONFETTI DE CELEBRACIÓN (OP1) === */
+/* === CONFETTI DE CELEBRACIÓN === */
 #confettiContainer { position: fixed; inset: 0; pointer-events: none; z-index: 9998; overflow: hidden; }
 .confetti { position: absolute; width: 10px; height: 10px; opacity: 0; }
 
@@ -171,13 +175,13 @@ body {
 .btn-cerrar:hover { opacity: 1; background: var(--dark-soft); }
 
 .custom-modal-overlay { position: fixed; inset: 0; background: rgba(11, 15, 23, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 24px; }
-.custom-modal-box { background: var(--bg-card); border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 340px; text-align: center; border: 3px solid var(--dark); box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.6); animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.custom-modal-box { background: var(--bg-card); border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 340px; text-align: center; border: 3px solid var(--dark); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .custom-modal-text { color: var(--dark); font-size: 15px; margin-bottom: 28px; font-weight: 600; line-height: 1.6; }
 .btn-modal-ok { width: 100%; background: var(--white); color: #000000; border: 2px solid var(--white); padding: 16px; border-radius: 14px; font-weight: 700; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; transition: all 0.3s ease; }
 .btn-modal-ok:hover { transform: translateY(-2px); background: #E5E7EB; }
 
 @media (max-width: 380px) {
-    .wallet-card { padding: 24px; }
+    .wallet-card { padding: 20px; }
     .stamps-grid { gap: 8px; }
     .stamp-cup, .stamp-bakery, .stamp-bolt { width: 38px; height: 38px; }
 }

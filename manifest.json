@@ -1,0 +1,25 @@
+{
+  "id": "club-rambla-app-cliente",
+  "name": "club rambla.",
+  "short_name": "club rambla.",
+  "description": "Tu tarjeta digital de beneficios para club rambla.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B0F17",
+  "theme_color": "#0B0F17",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

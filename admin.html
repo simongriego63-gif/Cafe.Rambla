@@ -10,7 +10,7 @@
     
     <style>
         :root {
-            /* Paleta Opción 1 (Gris y Negro) */
+            /* Paleta Opción 1 (Gris piedra y Negro puro) */
             --bg-main: #D1D1D1;  
             --bg-card: #EFEFEF;  
             --accent: #000000;   
@@ -68,7 +68,6 @@
         #pantallaDashboard { display: none; width: 100%; }
         
         /* --- TARJETAS DE MÉTRICAS --- */
-        /* Cambiado a 4 columnas en desktop para agregar el KPI de Fidelidad */
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
         @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
         
@@ -103,7 +102,7 @@
         .grafico-barras { aspect-ratio: 2/1; }
         .grafico-dona { aspect-ratio: 1/1; max-height: 250px; margin: 0 auto;}
 
-        /* --- TABLA OPTIMIZADA --- */
+        /* --- TABLA --- */
         .table-container { overflow-x: auto; margin-bottom: 5px;}
         table { width: 100%; border-collapse: collapse; text-align: left; table-layout: fixed;}
         th, td { padding: 16px 8px; border-bottom: 1px solid var(--dark-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
@@ -161,7 +160,7 @@
             <div style="margin-bottom: 10px; padding: 0 5px; display: flex; justify-content: space-between; align-items: flex-end;">
                 <div>
                     <h1>Panel Dueño</h1>
-                    <p style="margin: 0; color: var(--dark); opacity: 0.6; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Métricas en Tiempo Real</p>
+                    <p style="margin: 0; color: var(--dark); opacity: 0.6; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Estadísticas del Local</p>
                 </div>
                 <div style="margin: 0;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 170" width="100" height="50">
@@ -175,8 +174,8 @@
             </div>
             
             <div style="margin-top: 30px; margin-bottom: 25px;">
-                <label style="font-size: 16px; font-weight: 800; color: var(--dark); margin: 0;">Filtro por cohorte de registro:</label>
-                <p style="font-size: 13px; color: var(--dark); opacity: 0.6; margin: 6px 0 0 0; line-height: 1.4; font-weight: 600;">Muestra métricas exclusivas de los clientes que se registraron en un mes específico.</p>
+                <label style="font-size: 16px; font-weight: 800; color: var(--dark); margin: 0;">Filtro por mes de creación:</label>
+                <p style="font-size: 13px; color: var(--dark); opacity: 0.6; margin: 6px 0 0 0; line-height: 1.4; font-weight: 600;">Elegí un mes para ver cómo le fue a la gente que sacó su tarjeta en esa fecha.</p>
                 <div class="month-slider" id="contenedorMeses">
                     <button class="month-pill active" onclick="seleccionarMes('todos', this)">Histórico Completo</button>
                     <button class="month-pill" onclick="seleccionarMes('2026-01', this)">Enero</button>
@@ -194,34 +193,36 @@
                 </div>
             </div>
 
-            <div id="mensajeLoader">Sincronizando base de datos...</div>
+            <div id="mensajeLoader">Sincronizando con el local...</div>
 
             <div id="contenidoDatos" style="display: none;">
                 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="uiTotalClientes">0</div>
-                        <div class="stat-label">Total Clientes</div>
+                        <div class="stat-label">Clientes Anotados</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="uiTotalSellosHist">0</div>
-                        <div class="stat-label">Tazas Servidas</div>
+                        <div class="stat-label">Total Tazas Servidas</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="uiCafesCanjeados">0</div>
                         <div class="stat-label">Premios Entregados</div>
                     </div>
                     <div class="stat-card" style="background: var(--dark);">
-                        <div class="stat-value" id="uiTasaFidelidad" style="color: var(--bg-card);">0%</div>
-                        <div class="stat-label" style="color: var(--bg-card); opacity: 0.8;">Tasa de Fidelidad</div>
+                        <div class="stat-value" id="uiClientesActivos" style="color: var(--bg-card);">0</div>
+                        <div class="stat-label" style="color: var(--bg-card); opacity: 0.8;">Clientes Activos (Regresaron)</div>
                     </div>
                 </div>
 
                 <div class="dashboard-content">
                     <div class="charts-row">
+                        
                         <div class="panel-box">
                             <div class="panel-header">
-                                <span class="panel-title">Embudo de Retención</span>
+                                <span class="panel-title" id="tituloGraficoPrincipal">Crecimiento de Clientes</span>
+                                <span style="font-size: 11px; color: var(--dark); opacity: 0.6; font-weight: 700;" id="subtituloGraficoPrincipal">Evolución en el tiempo</span>
                             </div>
                             <div class="grafico-wrapper grafico-barras">
                                 <canvas id="graficoEstadisticas"></canvas>
@@ -230,29 +231,29 @@
 
                         <div class="panel-box">
                             <div class="panel-header">
-                                <span class="panel-title">Estado de Tarjetas</span>
-                                <span style="font-size: 11px; color: var(--dark); opacity: 0.6; font-weight: 700;">Distribución actual</span>
+                                <span class="panel-title">Termómetro de Premios</span>
+                                <span style="font-size: 11px; color: var(--dark); opacity: 0.6; font-weight: 700;">Estado de las tarjetas</span>
                             </div>
                             <div class="grafico-wrapper grafico-dona">
                                 <canvas id="graficoProgreso"></canvas>
                             </div>
                             <p style="font-size: 12px; color: var(--dark); opacity: 0.7; font-weight: 600; text-align: center; margin-top: 20px; line-height: 1.5;">
-                                Volumen de clientes cerca de exigir premio. Útil para prever stock.
+                                Te muestra cuántos clientes están a 1 o 2 tazas de exigir su premio gratis para que prepares el stock.
                             </p>
                         </div>
                     </div>
 
                     <div class="panel-box">
                         <div class="panel-header">
-                            <span class="panel-title">Ranking de Clientes Fieles</span>
-                            <span style="font-size: 11px; color: var(--dark); opacity: 0.6; font-weight: 700;">Top 15 histórico</span>
+                            <span class="panel-title">Los Mejores Clientes 🏆</span>
+                            <span style="font-size: 11px; color: var(--dark); opacity: 0.6; font-weight: 700;">Top 15 por consumos</span>
                         </div>
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th style="width: 25%;">Teléfono</th>
-                                        <th style="width: 35%;">Nombre</th>
+                                        <th style="width: 25%;">WhatsApp</th>
+                                        <th style="width: 35%;">Nombre del cliente</th>
                                         <th style="width: 20%; text-align: center;">Tazas Históricas</th>
                                         <th style="width: 20%; text-align: right;">Premios</th>
                                     </tr>
@@ -272,7 +273,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Configuración inalterada de Firebase
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCaqJraAXeZ8F4zCd9GUIdNIHhfU7FMzJk",
             authDomain: "club-cafe-app.firebaseapp.com",
@@ -292,6 +293,9 @@
         let graficoDona = null;
         let todosLosClientes = [];
         let filtroActual = 'todos'; 
+        
+        // Formateador de meses para que sea más legible (Ej: "Ene 26")
+        const nombresMeses = { "01":"Ene", "02":"Feb", "03":"Mar", "04":"Abr", "05":"May", "06":"Jun", "07":"Jul", "08":"Ago", "09":"Sep", "10":"Oct", "11":"Nov", "12":"Dic" };
 
         if (sessionStorage.getItem('adminAutorizado') === 'true') {
             document.getElementById('pantallaLogin').style.display = 'none';
@@ -346,6 +350,12 @@
             aplicarFiltro(filtroActual);
         }
 
+        function formatearMes(ym) {
+            if(!ym || ym.length < 7) return ym;
+            let p = ym.split('-');
+            return (nombresMeses[p[1]] || p[1]) + " " + p[0].substring(2);
+        }
+
         window.aplicarFiltro = function(mesFiltro) {
             let clientesFiltrados = todosLosClientes;
 
@@ -353,43 +363,44 @@
                 clientesFiltrados = todosLosClientes.filter(c => c.fecha && c.fecha.startsWith(mesFiltro));
             }
 
-            // Cálculos para métricas optimizadas
             let totalClientes = clientesFiltrados.length;
             let totalCafesCanjeados = 0;
             let totalSellosHistoricos = 0;
-            
-            let clientesActivos = 0; // Tienen al menos 1 punto
-            let clientesFieles = 0;  // Ya canjearon al menos 1 vez
+            let clientesActivos = 0; 
             
             let grupoInicio = 0; 
             let grupoMedio = 0;  
             let grupoCerca = 0;  
 
+            // Lógica del gráfico de crecimiento a lo largo del tiempo
+            let clientesPorMes = {};
+
             clientesFiltrados.forEach(c => {
                 totalCafesCanjeados += c.premios;
-                let consumoHistorico = c.puntos + (c.premios * 8); // Base 8 tazas por premio
+                let consumoHistorico = c.puntos + (c.premios * 8); 
                 totalSellosHistoricos += consumoHistorico;
-                c.lifetimeValue = consumoHistorico; // Guardamos para ordenar la tabla
+                c.lifetimeValue = consumoHistorico; 
                 
                 if (consumoHistorico > 0) clientesActivos++;
-                if (c.premios > 0) clientesFieles++;
 
                 if(c.puntos <= 3) grupoInicio++;
                 else if(c.puntos <= 7) grupoMedio++;
                 else if(c.puntos <= 9) grupoCerca++;
-            });
 
-            // Tasa de fidelidad
-            let tasaFidelidad = totalClientes > 0 ? Math.round((clientesFieles / totalClientes) * 100) : 0;
+                // Para la curva de crecimiento
+                if(c.fecha) {
+                    let mesStr = c.fecha.substring(0, 7);
+                    clientesPorMes[mesStr] = (clientesPorMes[mesStr] || 0) + 1;
+                }
+            });
 
             document.getElementById('uiTotalClientes').innerText = totalClientes;
             document.getElementById('uiTotalSellosHist').innerText = totalSellosHistoricos;
             document.getElementById('uiCafesCanjeados').innerText = totalCafesCanjeados;
-            document.getElementById('uiTasaFidelidad').innerText = tasaFidelidad + '%';
+            document.getElementById('uiClientesActivos').innerText = clientesActivos;
 
-            // Ordenamos la tabla por los mejores clientes (Lifetime Value)
+            // Ordenamos la tabla de clientes VIP
             clientesFiltrados.sort((a, b) => b.lifetimeValue - a.lifetimeValue);
-
             const tbody = document.getElementById('tablaClientes');
             tbody.innerHTML = '';
             
@@ -404,40 +415,85 @@
                 tbody.appendChild(tr);
             });
 
-            actualizarGraficos(totalClientes, clientesActivos, clientesFieles, grupoInicio, grupoMedio, grupoCerca);
+            // Preparamos datos para el gráfico principal según el filtro
+            let labelsGrafico = [];
+            let dataGrafico = [];
+            
+            if (mesFiltro === 'todos') {
+                document.getElementById('tituloGraficoPrincipal').innerText = "Crecimiento de Clientes";
+                document.getElementById('subtituloGraficoPrincipal').innerText = "Cuánta gente se sumó en el tiempo";
+                
+                let sumAcumulada = 0;
+                Object.keys(clientesPorMes).sort().forEach(mes => {
+                    sumAcumulada += clientesPorMes[mes];
+                    labelsGrafico.push(formatearMes(mes));
+                    dataGrafico.push(sumAcumulada);
+                });
+            } else {
+                document.getElementById('tituloGraficoPrincipal').innerText = "Resumen de Actividad";
+                document.getElementById('subtituloGraficoPrincipal').innerText = "Estadísticas del mes elegido";
+            }
+
+            actualizarGraficos(mesFiltro === 'todos', labelsGrafico, dataGrafico, totalClientes, totalSellosHistoricos, totalCafesCanjeados, grupoInicio, grupoMedio, grupoCerca);
         }
 
-        function actualizarGraficos(registrados, activos, fieles, gInicio, gMedio, gCerca) {
+        function actualizarGraficos(esHistorico, labelsCrecimiento, dataCrecimiento, totalC, totalTazas, totalP, gInicio, gMedio, gCerca) {
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#111111';
             
-            // Gráfico 1: Embudo de Retención
             const ctxBarras = document.getElementById('graficoEstadisticas').getContext('2d');
             if(graficoBarras) graficoBarras.destroy(); 
 
-            graficoBarras = new Chart(ctxBarras, {
-                type: 'bar',
-                data: {
-                    labels: ['Embudo de Conversión'],
-                    datasets: [
-                        { label: 'Registrados', data: [registrados], backgroundColor: '#CCCCCC', borderRadius: 6 },
-                        { label: 'Activos (>1 taza)', data: [activos], backgroundColor: '#666666', borderRadius: 6 },
-                        { label: 'Fieles (Canjearon)', data: [fieles], backgroundColor: '#111111', borderRadius: 6 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    scales: { 
-                        y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, 
-                        x: { display: false, grid: { display: false } } 
+            // Si es TODO EL HISTORIAL, dibuja la línea de tiempo. Si es un MES, dibuja barras comparativas de actividad
+            if(esHistorico) {
+                graficoBarras = new Chart(ctxBarras, {
+                    type: 'line',
+                    data: {
+                        labels: labelsCrecimiento,
+                        datasets: [{
+                            label: 'Total Clientes Registrados',
+                            data: dataCrecimiento,
+                            borderColor: '#111111',
+                            backgroundColor: 'rgba(17, 17, 17, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#111111',
+                            pointRadius: 4
+                        }]
                     },
-                    plugins: { 
-                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { weight: 'bold' } } },
-                        tooltip: { backgroundColor: '#111111', titleFont: { size: 14 }, padding: 12 }
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: { 
+                            y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, 
+                            x: { grid: { display: false } } 
+                        },
+                        plugins: { legend: { display: false }, tooltip: { backgroundColor: '#111111', padding: 12 } },
+                        animation: { duration: 500 } 
+                    }
+                });
+            } else {
+                graficoBarras = new Chart(ctxBarras, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Resumen de la Actividad'],
+                        datasets: [
+                            { label: 'Nuevas Tarjetas', data: [totalC], backgroundColor: '#CCCCCC', borderRadius: 6 },
+                            { label: 'Tazas Consumidas', data: [totalTazas], backgroundColor: '#666666', borderRadius: 6 },
+                            { label: 'Premios Ganados', data: [totalP], backgroundColor: '#111111', borderRadius: 6 }
+                        ]
                     },
-                    animation: { duration: 500 } 
-                }
-            });
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: { 
+                            y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, 
+                            x: { display: false, grid: { display: false } } 
+                        },
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { weight: 'bold' } } } },
+                        animation: { duration: 500 } 
+                    }
+                });
+            }
 
             // Gráfico 2: Termómetro Operativo
             const ctxDona = document.getElementById('graficoProgreso').getContext('2d');
@@ -446,7 +502,7 @@
             graficoDona = new Chart(ctxDona, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Inicio (0-3)', 'Medio (4-7)', 'Por canjear (8)'],
+                    labels: ['Acaban de Empezar (1 a 3 tazas)', 'A mitad de camino (4 a 6 tazas)', '¡Cerca del premio! (7 u 8 tazas)'],
                     datasets: [{
                         data: [gInicio, gMedio, gCerca],
                         backgroundColor: ['#EFEFEF', '#888888', '#111111'],

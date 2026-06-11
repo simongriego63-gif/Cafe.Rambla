@@ -102,6 +102,7 @@ class RamblaApp {
     }
 
     abrirTarjeta(celular) {
+        // Codi QR arreglat: Blanc fons pur amb color negre pur
         this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=FFFFFF&color=000000`;
         this.ui.telLabel.innerText = `******${celular.slice(-4)}`;
 
@@ -111,7 +112,6 @@ class RamblaApp {
                 this.ui.nombre.innerText = datos.nombre;
                 
                 if(this.primeraCarga) {
-                    // Carga ultra rápida a 50ms
                     setTimeout(() => {
                         this.cambiarPantalla('tarjeta');
                         this.renderizarTazas(datos);
@@ -195,11 +195,10 @@ class RamblaApp {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        // Optimizado a 6 partículas para no sobrecargar el celular
         for (let i = 0; i < 6; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
-            p.style.willChange = 'transform, opacity'; // Aceleración por GPU
+            p.style.willChange = 'transform, opacity';
             document.body.appendChild(p);
 
             const angle = Math.random() * Math.PI * 2;
@@ -227,14 +226,14 @@ class RamblaApp {
         const container = document.getElementById('confettiContainer');
         if(!container) return;
         
-        const colors = ['#72BF44', '#FFFFFF', '#161B22', '#10B981'];
+        // Confeti invertido (Tonos blancs i grisos)
+        const colors = ['#FFFFFF', '#EFEFEF', '#CCCCCC', '#999999'];
         const shapes = ['circle', 'square', 'triangle'];
 
-        // Optimizado a 40 confetis con GPU acelerada
         for (let i = 0; i < 40; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
-            confetti.style.willChange = 'transform, opacity'; 
+            confetti.style.willChange = 'transform, opacity';
             
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];

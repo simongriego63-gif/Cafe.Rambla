@@ -102,8 +102,8 @@ class RamblaApp {
     }
 
     abrirTarjeta(celular) {
-        // QR Invertido: Fondo negro (#111111) y líneas blancas (#EFEFEF)
-        this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=111111&color=EFEFEF`;
+        // Codi QR arreglat: Blanc fons pur amb color negre pur
+        this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=FFFFFF&color=000000`;
         this.ui.telLabel.innerText = `******${celular.slice(-4)}`;
 
         this.unsubscribe = onSnapshot(doc(this.db, "clientes", celular), (docSnap) => {
@@ -226,7 +226,7 @@ class RamblaApp {
         const container = document.getElementById('confettiContainer');
         if(!container) return;
         
-        // Confeti en colores adaptados al fondo negro (blancos, plateados)
+        // Confeti invertido (Tonos blancs i grisos)
         const colors = ['#FFFFFF', '#EFEFEF', '#CCCCCC', '#999999'];
         const shapes = ['circle', 'square', 'triangle'];
 

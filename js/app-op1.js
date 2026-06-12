@@ -102,7 +102,6 @@ class RamblaApp {
     }
 
     abrirTarjeta(celular) {
-        // SOLUCIÓN 1: Cambiamos FFFFFF por EFEFEF para que el fondo del QR coincida con la tarjeta
         this.ui.qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${celular}&bgcolor=EFEFEF&color=000000`;
         this.ui.telLabel.innerText = `******${celular.slice(-4)}`;
 
@@ -112,7 +111,6 @@ class RamblaApp {
                 this.ui.nombre.innerText = datos.nombre;
                 
                 if(this.primeraCarga) {
-                    // SOLUCIÓN 3: Reducimos la demora artificial de 400ms a solo 50ms. Carga rapidísimo.
                     setTimeout(() => {
                         this.cambiarPantalla('tarjeta');
                         this.renderizarTazas(datos);
@@ -153,6 +151,10 @@ class RamblaApp {
             }
             
             const svgElement = contenedorSvg.querySelector('svg'); 
+            
+            if (i === 3 || i === 6 || i === 8) {
+                svgElement.classList.add('sello-especial');
+            }
             
             if (i <= puntosActuales) {
                 setTimeout(() => {
@@ -196,11 +198,10 @@ class RamblaApp {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        // SOLUCIÓN 2: Reducimos a 6 partículas para las tazas y le sumamos willChange para fluidez
         for (let i = 0; i < 6; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
-            p.style.willChange = 'transform, opacity'; // Fuerza el uso de la GPU del celular
+            p.style.willChange = 'transform, opacity'; 
             document.body.appendChild(p);
 
             const angle = Math.random() * Math.PI * 2;
@@ -231,11 +232,10 @@ class RamblaApp {
         const colors = ['#000000', '#333333', '#888888', '#CCCCCC'];
         const shapes = ['circle', 'square', 'triangle'];
 
-        // SOLUCIÓN 2: Bajamos a 40 confetis (la mitad) y le agregamos willChange
         for (let i = 0; i < 40; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
-            confetti.style.willChange = 'transform, opacity'; // Fuerza el uso de la GPU del celular
+            confetti.style.willChange = 'transform, opacity'; 
             
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];
@@ -310,7 +310,6 @@ class RamblaApp {
 
 new RamblaApp();
 
-// --- LÓGICA DE INSTALACIÓN PWA ---
 let eventoInstalacion = null;
 const btnInstalar = document.getElementById('btnInstalarApp');
 
